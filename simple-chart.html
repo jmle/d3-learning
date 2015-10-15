@@ -3,34 +3,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <body></body>
 <script>
-	var margin = {top: 20, right: 0, bottom: 20, left: 0},
-		width = 960 - margin.left - margin.right,
-		height = 500 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 0, bottom: 20, left: 0},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
-	// Number formatter: 1 decimal precision
-	var formatNumber = d3.format(".1f");
+    // Number formatter: 1 decimal precision
+    var formatNumber = d3.format(".1f");
 
-	// Create scales
-	var y = d3.scale.linear()		// Create new linear scale
-		.domain([0, 1e6])			// with an input from 0 to 1000000
-		.range([height, 0]);		// and an output range from 0 to total heigth
+    // Create scales
+    var y = d3.scale.linear()       // Create new linear scale
+        .domain([0, 1e6])           // with an input from 0 to 1000000
+        .range([height, 0]);        // and an output range from 0 to total heigth
 
-	var x = d3.time.scale()											// Create a time scale
-		.domain([new Date(2010, 7, 1), new Date(2012, 7, 1)])		// with an input of these dates
-		.range([0, width]);											// and an output range from 0 to total heigth
+    var x = d3.time.scale()                                         // Create a time scale
+        .domain([new Date(2010, 7, 1), new Date(2012, 7, 1)])       // with an input of these dates
+        .range([0, width]);                                         // and an output range from 0 to total heigth
 
-	// Create axes
-	var xAxis = d3.svg.axis()
-		.scale(x)					// Assign the previously created x scale
-		.ticks(d3.time.years)		// Don't understand this very well
-		.tickSize(6, 0)				// Tick size (inner, outer)
-		.orient("bottom");			// Horizontal axis with ticks below orientation path
+    // Create axes
+    var xAxis = d3.svg.axis()
+        .scale(x)                   // Assign the previously created x scale
+        .ticks(d3.time.years)       // Don't understand this very well
+        .tickSize(6, 0)             // Tick size (inner, outer)
+        .orient("bottom");          // Horizontal axis with ticks below orientation path
 
-	var yAxis = d3.svg.axis()
-		.scale(y)
-		.tickSize(width)
-		.tickFormat(formatCurrency)
-		.orient("right");
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .tickSize(width)                // Don't understand this very well
+        .tickFormat(formatCurrency)     // Custom formatting function
+        .orient("right");               // Vertical axis with ticks to the right of the domain path
 
 
 
