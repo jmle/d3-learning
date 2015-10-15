@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<style>
+
+    body {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .y.axis path {
+      display: none;
+    }
+
+    .y.axis line {
+      stroke: #777;
+      stroke-dasharray: 2,2;
+    }
+
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <body></body>
 <script>
@@ -32,6 +55,33 @@
         .tickFormat(formatCurrency)     // Custom formatting function
         .orient("right");               // Vertical axis with ticks to the right of the domain path
 
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append ("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")"); // translate by x and y... not sure why
 
+    var gy = svg.append("g")        // Append another group
+        .attr("class", "y axis")    // for the y axis (add class)
+        .call(yAxis)                // and apply the yAxis to the selection ("g")
+        .call(customAxis);          // and also apply customAxis
+
+    var gx = svg.append("g")                                // Append another group
+        .attr("class", "x axis")                            // for the y axis (add class)
+        .attr("transform", "translate(0," + height + ")")   // translate up (not sure why)
+        .call(yAxis);                                       // and apply the yAxis to the selection ("g")
+
+    function customAxis(g) {
+        g.selectAll("text")
+            .attr("x", 4)
+            .attr("dy", -4);
+    }
+
+    function formatCurrency(d) {
+        var s = formatNumber(d / 1e6);
+        return d === y.domain()[1]
+            ? "$" + s + " million"
+            : s;
+    }
 
 </script>
