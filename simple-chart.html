@@ -51,26 +51,31 @@
 
     var yAxis = d3.svg.axis()
         .scale(y)
-        .tickSize(width)                // Don't understand this very well
+        .tickSize(width)                // Length of the ticks coming from the y axis
         .tickFormat(formatCurrency)     // Custom formatting function
         .orient("right");               // Vertical axis with ticks to the right of the domain path
 
+    // Create main svg
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append ("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")"); // translate by x and y... not sure why
 
+    // Create groups for y and x axes
+    // One group per tick will automatically be created by d3
     var gy = svg.append("g")        // Append another group
         .attr("class", "y axis")    // for the y axis (add class)
         .call(yAxis)                // and apply the yAxis to the selection ("g")
-        .call(customAxis);          // and also apply customAxis
+        .call(customAxis);          // and also apply customAxis.
 
     var gx = svg.append("g")                                // Append another group
         .attr("class", "x axis")                            // for the y axis (add class)
         .attr("transform", "translate(0," + height + ")")   // translate up (not sure why)
-        .call(yAxis);                                       // and apply the yAxis to the selection ("g")
+        .call(xAxis);                                       // and apply the xAxis to the selection ("g")
 
+    // Function to customise axis
+    // It moves the texts in the y axis and positions them correctly
     function customAxis(g) {
         g.selectAll("text")
             .attr("x", 4)
